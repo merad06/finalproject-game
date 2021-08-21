@@ -14,3 +14,14 @@ body{
     margin: 5px;
 
 }
+
+
+.col.blue{
+    background-color: blue;
+}
+.col.red{
+    background-color:red;
+}
+.col.empty{
+    cursor:pointer;
+}
