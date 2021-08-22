@@ -63,16 +63,16 @@ class Connect4 {
         // add an event click that allow the click on on cell and it will become colored with blue color
         $board.on('click','.col.empty', function(){
             const col= $(this).data('col')
-            const row= $(this).data('row')
+            //const row= $(this).data('row')
             const $lastEmptyCell = findLastEmptyCell(col)
             $lastEmptyCell.removeClass('empty next-${that.player}')
             $lastEmptyCell.addClass(that.player)
             $lastEmptyCell.data('player',that.player)
             
             //check for the winer 
-            const winner = that.checkwinner(row, col)
+            const winner = that.checkwinner($lastEmptyCell.data('row'), $lastEmptyCell.data('col'))
             if (winner){
-                alert('Game is Over, the Player ${that.player} Won')
+                alert(`Game is Over, the Player ${that.player} 'Won`)
                 return
             }
             // alternate between the two players
@@ -120,7 +120,18 @@ class Connect4 {
         function checkVerticaly(){
             return checkWin({i: -1, j:0},{i: 1, j:0})
         }
-        return checkVerticaly()
+        function checkHorizontal(){
+            return checkWin({i:0,j:-1},{i:0,j:1})
+
+        }
+        function checkDiagDLUR(){
+            return checkWin ({i:1, j:-1}, {i:1,j:1})
+        }
+        function checkDiagULDR(){
+            return checkWin ({i:1, j:1}, {i:-1, j:-1})
+        }
+        return checkVerticaly() || checkHorizontal() || checkDiagDLUR() || checkDiagULDR()
+
 
 
     }
