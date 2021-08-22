@@ -7,7 +7,7 @@ class Connect4 {
         this.selector = selector;
         this.creatgrid();
         this.eventListener();
-        this.checkwinner();
+        this.gameover = false
         
     }
 
@@ -50,6 +50,7 @@ class Connect4 {
 
         }
         $board.on('mouseenter','.col.empty', function(){
+            if (that.gameover) return // this is to end the game if a player wins
             console.log(('here',this));
             const col= $(this).data('col')
             const $lastEmptyCell = findLastEmptyCell(col)
@@ -62,6 +63,7 @@ class Connect4 {
         })
         // add an event click that allow the click on on cell and it will become colored with blue color
         $board.on('click','.col.empty', function(){
+            if (that.gameover) return // this is to end the game if a player wins
             const col= $(this).data('col')
             //const row= $(this).data('row')
             const $lastEmptyCell = findLastEmptyCell(col)
@@ -72,6 +74,7 @@ class Connect4 {
             //check for the winer 
             const winner = that.checkwinner($lastEmptyCell.data('row'), $lastEmptyCell.data('col'))
             if (winner){
+                that.gameover = true // to end the game whenever there is a winner
                 alert(`Game is Over, the Player ${that.player} 'Won`)
                 return
             }
