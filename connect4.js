@@ -7,6 +7,7 @@ class Connect4 {
         this.selector = selector;
         this.creatgrid();
         this.eventListener();
+        this.checkwinner();
         
     }
 
@@ -35,7 +36,7 @@ class Connect4 {
         // indicator for the place when the user hover over the cell
         const $board = $(this.selector)
         // set up a varibale that will take the value of this
-        const thisAlt = this
+        const that = this
         function findLastEmptyCell(col){
             const cell = $(`.col[data-col='${col}']`)
             //console.log(cell)
@@ -52,23 +53,31 @@ class Connect4 {
             console.log(('here',this));
             const col= $(this).data('col')
             const $lastEmptyCell = findLastEmptyCell(col)
-            $lastEmptyCell.addClass('next-${thisAlt.player}')
+            $lastEmptyCell.addClass('next-${that.player}')
             //console.log(col)
         })
         //remove the previouse cells that was hovered 
         $board.on('mouseleave','.col',function(){
-            $('.col').removeClass('next-${thisAlt.player}')
+            $('.col').removeClass('next-${that.player}')
         })
         // add an event click that allow the click on on cell and it will become colored with blue color
         $board.on('click','.col.empty', function(){
             const col= $(this).data('col')
-            //const row= $(this).data('row')
+            const row= $(this).data('row')
             const $lastEmptyCell = findLastEmptyCell(col)
-            $lastEmptyCell.removeClass('empty next-${thisAlt.player}')
-            $lastEmptyCell.addClass(thisAlt.player)
+            $lastEmptyCell.removeClass('empty next-${that.player}')
+            $lastEmptyCell.addClass(that.player)
+            $lastEmptyCell.data('player',that.player)
+            
+            //check for the winer 
+            const winner = that.checkwinner(row, col)
+            if (winner){
+                alert('Game is Over, the Player ${that.player} Won')
+                return
+            }
             // alternate between the two players
-            thisAlt.player = (thisAlt.player === 'blue') ? 'red' : 'blue'
-            console.log(thisAlt.player + ' it is your turn to play')
+            that.player = (that.player === 'blue') ? 'red' : 'blue'
+            console.log(that.player + ' it is your turn to play')
 
             $(this).trigger('mouseenter')
             
@@ -79,5 +88,40 @@ class Connect4 {
 
     }
 
+    checkwinner (row, col){
+        const that = this
+        function $getCell(i,j){
+            return $(`.col[data-row='${i}'][data-col='${j}']`)
+        }
+        function checkDirection(direction){
+            let total =0
+            let i = row + direction.i
+            let j = col + direction.j
+            let $next = $getCell(i,j)
+            while (i >= 0 && i< that.ROWS && j>= 0 && j< that.COLS && $next.data('player')=== that.player){
+                total++
+                i += direction.i
+                j += direction.j
+                $next = $getCell(i,j)
 
+            }
+            return total
+
+        }
+        function checkWin(direct1, direct2){
+            const total = 1 + checkDirection(direct1) + checkDirection(direct2)
+            if (total >= 4){
+                return that.player
+            } else {
+                return null
+            }
+
+        }
+        function checkVerticaly(){
+            return checkWin({i: -1, j:0},{i: 1, j:0})
+        }
+        return checkVerticaly()
+
+
+    }
 }

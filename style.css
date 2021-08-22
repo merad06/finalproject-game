@@ -1,5 +1,6 @@
 body{
     text-align: center;
+    background-color: rgb(75, 88, 104);
 }
 #connect4{
     background-color: yellowgreen;
