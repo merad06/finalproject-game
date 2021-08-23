@@ -13,6 +13,12 @@ class Connect4 {
 
     creatgrid(){
         const $board = $(this.selector)
+        //empty the container to reset the game 
+        $board.empty()
+        // to reset the game
+        this.gameover = false
+        this.player = "blue"
+    
     
         //create 6 rows and inside each row 7 coloms 
         for (let row =0; row <this.ROWS; row++){
@@ -137,5 +143,9 @@ class Connect4 {
 
 
 
+    }
+    // reset the game 
+    reset (){
+        this.creatgrid()
     }
 }
