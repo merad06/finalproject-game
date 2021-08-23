@@ -1,10 +1,12 @@
 body{
     text-align: center;
-    background-color: rgb(75, 88, 104);
+    background-color: rgb(198, 219, 245);
 }
 #connect4{
     background-color: yellowgreen;
     display: inline-block;
+    border: midnightblue;
+    box-shadow: 5px 5px olive;
 }
 .col{
     width: 73px;
