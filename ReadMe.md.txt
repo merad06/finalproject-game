@@ -11,7 +11,7 @@ creatgrid(): a method to create the matrix using a loop
 eventListener(): a method that handls all the user interaction; click, hover, mouseenter..., calculate the winer 
 checkwiner(): a method with functions to check for direction, to check if there is a winer (verticals, horizontals and diagonals)
 reset(): to reset the game at any given time 
-
+_ app.js with be user as a main, and will have the document ready function 
 D. Unsolved problems (features to add to the game):
 _ If all the cells are done and there was no winner, the game mast restart 
 _ offer the players the ability to play multiple rounds
